@@ -2,6 +2,7 @@ import logging
 import plistlib
 import shutil
 from pathlib import Path
+from typing import Optional
 
 from packaging.version import Version
 
@@ -11,7 +12,6 @@ from pyiosbackup.keybag import Keybag
 from pyiosbackup.manifest_dbs.factory import from_path as manifest_db_from_path
 from pyiosbackup.manifest_dbs.manifest_db_interface import ManifestDb
 from pyiosbackup.manifest_plist import ManifestPlist
-
 INFO_PLIST_PATH = 'Info.plist'
 STATUS_PLIST_PATH = 'Status.plist'
 
@@ -91,8 +91,8 @@ class Backup:
         return self._info['IMEI']
 
     @property
-    def itunes_version(self) -> str:
-        return self._info['iTunes Version']
+    def itunes_version(self) -> Optional[str]:
+        return self._info.get('iTunes Version')
 
     @property
     def is_encrypted(self) -> bool:
