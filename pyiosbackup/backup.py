@@ -12,6 +12,7 @@ from pyiosbackup.keybag import Keybag
 from pyiosbackup.manifest_dbs.factory import from_path as manifest_db_from_path
 from pyiosbackup.manifest_dbs.manifest_db_interface import ManifestDb
 from pyiosbackup.manifest_plist import ManifestPlist
+
 INFO_PLIST_PATH = 'Info.plist'
 STATUS_PLIST_PATH = 'Status.plist'
 

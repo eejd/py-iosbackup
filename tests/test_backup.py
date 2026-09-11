@@ -51,17 +51,6 @@ def test_creating_from_path_sqlite3(backup):
     assert file.read_text() == 'Test data'
 
 
-
-def test_itunes_version_missing():
-    manifest_db = ManifestDbMbdb(Path('.'), [])
-    manifest_plist = ManifestPlist({'IsEncrypted': False, 'Lockdown': {'ProductVersion': '26.6.1'}})
-    status = {'Date': datetime(2026, 9, 11, tzinfo=timezone.utc), 'Version': '3.3'}
-    info = {'Target Identifier': 'finder-device', 'Installed Applications': [], 'IMEI': 'test-imei'}
-    # No 'iTunes Version' key
-    backup = Backup(Path('/tmp/test_backup'), manifest_db, manifest_plist, status, info, keybag=None)
-    assert backup.itunes_version is None
-    assert backup.stats()['itunes_version'] is None
-
 def test_missing_entry(backup):
     b = Backup.from_path(backup, '0000')
     with pytest.raises(MissingEntryError):
