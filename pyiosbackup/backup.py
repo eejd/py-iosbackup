@@ -2,6 +2,7 @@ import logging
 import plistlib
 import shutil
 from pathlib import Path
+from typing import Optional
 
 from packaging.version import Version
 
@@ -91,8 +92,8 @@ class Backup:
         return self._info['IMEI']
 
     @property
-    def itunes_version(self) -> str:
-        return self._info['iTunes Version']
+    def itunes_version(self) -> Optional[str]:
+        return self._info.get('iTunes Version')
 
     @property
     def is_encrypted(self) -> bool:

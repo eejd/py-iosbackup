@@ -145,3 +145,14 @@ def test_missing_entry_mbdb(tmp_path, manifest_keybag_zeros_before_10_2):
 def test_not_supplying_password(backup):
     with pytest.raises(BackupPasswordIsRequired):
         Backup.from_path(backup)
+
+
+def test_missing_itunes_version_regression():
+    db = ManifestDbMbdb(Path('.'), [])
+    manifest_plist = ManifestPlist({'IsEncrypted': False, 'Lockdown': {'ProductVersion': '26.6.1'}})
+    status = {'Date': datetime(2026, 9, 11, tzinfo=timezone.utc), 'Version': '3.3'}
+    info = {'Target Identifier': 'finder-device', 'Installed Applications': [], 'IMEI': 'test-imei'}
+    b = Backup(Path('.'), db, manifest_plist, status, info, None)
+    assert b.itunes_version is None
+    st = b.stats()
+    assert st['itunes_version'] is None
